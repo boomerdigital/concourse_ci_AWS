@@ -1,0 +1,22 @@
+---
+
+# Tasks file for making concourse  directories
+
+# Make concourse directories
+  - name: Make web key directory
+    file:
+      path: /var/lib/concourse/keys/web
+      state: directory
+      mode: 0755
+  - name: Make worker key directory
+    file:
+      path: /var/lib/concourse/keys/worker
+      state: directory
+      mode: 0755
+  - name: Make worker directory
+    file:
+      path: /opt/concourse/worker
+      state: directory
+      mode: 0755
+
+

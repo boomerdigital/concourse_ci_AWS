@@ -1,0 +1,11 @@
+---
+
+# Tasks file for concourse binaries install
+
+# Install concourse_ci
+  - name: Install  concourse_ci
+    get_url:
+      url: https://github.com/concourse/concourse/releases/download/v3.8.0/concourse_linux_amd64
+      dest: /usr/local/bin/concourse
+      mode: 0755
+

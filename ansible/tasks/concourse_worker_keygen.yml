@@ -1,0 +1,23 @@
+---
+
+# Tasks file for generating concourse worker node key
+
+# Generate keys
+  - name: Copy key script
+    copy:
+      src: ./scripts/concourse/concourse_worker_keygen.sh
+      dest: /tmp
+      owner: ec2-user
+      mode: 0755
+  - name: Run keygen script
+    command: sh concourse_worker_keygen.sh
+    args:
+      chdir: /tmp
+
+# Copy tsa_host_key    
+  - name: Copy tsa_host_key.pub
+    copy:
+      src: /tmp/tsa_host_key.pub
+      dest: /var/lib/concourse/keys/web/tsa_host_key.pub
+      owner: ec2-user
+      mode: 0400

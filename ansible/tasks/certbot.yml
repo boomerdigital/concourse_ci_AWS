@@ -1,0 +1,30 @@
+---
+
+# Tasks file for certbot install
+
+# Modify rhel repo
+  - name: Enable rhel-server-extras, and rhel-server-optional
+    command: yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
+
+  - name: Install certbot-nginx 
+    yum:
+      name: certbot-nginx
+      state: installed
+
+  - name: Enable port forwarding to local_ip:8080
+    shell: setsebool httpd_can_network_connect on -P
+
+# Run script command  
+  - name: Run cerbot command
+    shell: certbot certonly --nginx --non-interactive --agree-tos --email <insert_email_for_cert_comm> -d <your_ci_server_domain>
+
+# Stop nginx
+  - name: Ensure nginx is stopped
+    service:
+      name: nginx
+      state: stopped
+ 
+# Run script auto renewal command
+  - name: Run cerbot command
+    shell: certbot renew --dry-run 
+

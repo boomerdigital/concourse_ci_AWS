@@ -1,0 +1,23 @@
+---
+
+# Tasks file for elreo-release install
+
+# Get and install elrepo
+  - name: Get elrepo-release
+    get_url:
+      url: http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm 
+      dest: /tmp/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+      mode: 0755
+
+  - name: Install elrepo-release
+    yum:
+      name: /tmp/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+      state: installed
+
+# Enable elrepo-kernel and reload grub config
+  - name: Enable elrepo-kernel
+    shell: yum -y --enablerepo=elrepo-kernel install kernel-ml
+
+  - name: Reload grub config
+    shell: grub2-mkconfig -o /boot/grub2/grub.cfg
+

@@ -1,0 +1,37 @@
+---
+
+# Tasks file for copying nginx scripts to concourse_web server
+
+# Stop nginx
+  - name: Ensure nginx is stopped
+    service:
+      name: nginx
+      state: stopped 
+      daemon_reload: yes
+
+# Copy concourse.boomerdigital.net configuration file
+  - name: Copy configuration file for <your_ci_server_domain>
+    copy:
+      src: ./scripts/nginx/<your_ci_server_domain.conf>
+      dest: /etc/nginx/conf.d/<your_ci_server_domain.conf>
+      mode: 0644
+    
+  - name: Remove default.conf file
+    file:
+      remote_src: yes
+      src: /etc/nginx/conf.d/default.conf
+      path: /etc/nginx/conf.d/default.conf
+      state: absent 
+
+# Kill nginx process
+  - name: Kill nginx
+    shell: pkill nginx
+    ignore_errors: True
+
+# Start nginx
+  - name: Ensure nginx is started
+    systemd:
+      name: nginx
+      state: started
+      enabled: True
+

@@ -1,0 +1,37 @@
+---
+
+# Tasks file for concourse_worker_node
+
+# Update packages 
+  - name: Update all packages
+    yum: name=* state=latest
+
+# Add concourse to PATH
+  - name: Add concourse_path.sh to /etc/profile.d
+    include_tasks: ./tasks/concourse_add_path.yml
+
+# Make concourse directories
+  - name: Make concourse directories
+    include_tasks: ./tasks/concourse_dir.yml
+
+# Install concourse binaries
+  - name: Install concourse
+    include_tasks: ./tasks/concourse_worker_bin.yml
+
+# Generate concourse worker keys
+  - name: ssh-keygen
+    include_tasks: ./tasks/concourse_worker_keygen.yml
+
+# Copy concourse worker scripts
+  - name: Copy scripts
+    include_tasks: ./tasks/concourse_worker_scripts.yml
+
+# Enable concourse-worker
+  - name: Enable concourse-worker
+    include_tasks: ./tasks/concourse_worker_systemd.yml
+
+# Reboot server
+  - name: Reboot server
+    include_tasks: ./tasks/reboot.yml
+
+

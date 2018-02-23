@@ -1,0 +1,14 @@
+---
+
+# Tasks file for epel-release
+  - name: Get epel-release url
+    get_url:
+      url: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      dest: /tmp/epel-release-latest-7.noarch.rpm
+      mode: 0755
+
+  - name: Install epel-release
+    yum:
+      name: /tmp/epel-release-latest-7.noarch.rpm
+      state: installed
+

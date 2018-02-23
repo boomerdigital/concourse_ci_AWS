@@ -1,0 +1,20 @@
+---
+
+# Tasks file copying scripts to concourse_web server
+
+# Copy concourse-web script
+    - name: Copy start_web script
+      copy:
+        src: ./scripts/concourse/concourse_start_web.sh
+        dest: /usr/local/bin/concourse-web
+        owner: ec2-user
+        mode: 0755
+
+# Copy concourse-worker script
+    - name: Copy start_worker script
+      copy:
+        src: ./scripts/concourse/concourse_start_worker.sh
+        dest: /usr/local/bin/concourse-worker
+        owner: ec2-user
+        mode: 0755
+

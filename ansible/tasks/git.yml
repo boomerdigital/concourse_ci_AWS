@@ -1,0 +1,5 @@
+---
+
+# Tasks file for git install
+  - name: Install git
+    yum: name=git  update_cache=true state=installed

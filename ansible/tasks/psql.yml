@@ -1,0 +1,12 @@
+---
+
+# Tasks file for postgrSQL install
+
+# Install psycopg2
+  - name: Install psycopg
+    pip: name=psycopg2 state=present
+
+
+# Install postgreSQL
+  - name: Install postgreSQL
+    yum: name=postgresql update_cache=true state=installed

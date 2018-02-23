@@ -1,0 +1,16 @@
+---
+
+# Tasks file for python packages install
+  - name: Install python packages
+    yum:
+      name: "{{item}}"
+      state: installed
+      update_cache: yes
+    with_items:
+      - python
+      - python-libs
+      - python-devel  
+      - python-pip
+  - name: Install pExpect
+    pip: name=pexpect state=present
+

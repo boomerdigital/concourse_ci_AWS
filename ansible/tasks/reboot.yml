@@ -1,0 +1,19 @@
+---
+
+# Tasks file for reboot of server
+
+# Reboot server
+  - name: Reboot server
+    shell: sleep 1 && shutdown -r now 
+    async: 1
+    poll: 0
+    ignore_errors: true
+
+  - name: Wait for system to boot up
+    local_action: wait_for
+    remote_user: ec2-user
+    become: yes
+    become_method: sudo
+    connection: ssh
+      
+

@@ -1,0 +1,15 @@
+---
+
+# Tasks file for adding concourse to PATH
+
+# Copy concourse_path file to /etc/profile.d
+  - name: Copy concourse_path.sh
+    copy:
+      src: ./scripts/concourse/concourse_path.sh
+      dest: /etc/profile.d/concourse_path.sh
+
+  - name: Add PATH to profile
+    shell: source /etc/profile.d/concourse_path.sh
+    args:
+      executable: /bin/bash
+

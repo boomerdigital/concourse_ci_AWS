@@ -1,0 +1,16 @@
+variable "aws_region" {}
+variable "aws_profile" {}
+variable "localip_cidr" {}
+variable "db_instance_class" {}
+variable "dbname" {}
+variable "dbuser" {}
+variable "dbpassword" {}
+variable "final_snapshot_id" {}
+variable "key_name" {}
+variable "public_key_path" {}
+variable "domain_name" {}
+variable "web_instance_type" {}
+variable "web_ami" {}
+variable "worker_instance_type" {}
+variable "worker_ami" {}
+variable "delegation_set" {}

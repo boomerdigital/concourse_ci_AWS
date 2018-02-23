@@ -1,0 +1,33 @@
+---
+
+# Tasks file copying systemd file  concourse-web.service
+
+# Copy concourse-web systemd file
+  - name: Copy concourse-web.service
+    copy:
+      src: ./scripts/concourse/concourse-web.service
+      dest: /etc/systemd/system/concourse-web.service
+
+# Enable concourse-web
+  - name: Enable concourse-web.service
+    systemd:
+      name: concourse-web
+      state: started
+      enabled: True
+
+# Tasks file copying systemd file  concourse-worker.service
+
+# Copy concourse-worker systemd file
+  - name: Copy concourse-worker.service
+    copy:
+      src: ./scripts/concourse/concourse-worker.service
+      dest: /etc/systemd/system/concourse-worker.service
+
+# Enable concourse-worker
+  - name: Enable concourse-worker.service
+    service:
+      name: concourse-worker
+      state: started
+      enabled: True
+
+

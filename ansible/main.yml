@@ -1,0 +1,100 @@
+---
+- hosts: concourse_web
+  remote_user: ec2-user
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+
+  tasks:
+# Update packages 
+    - name: Update all packages
+      yum: name=* state=latest
+
+# Edit grub file
+    - name: Edit grub file
+      include_tasks: ./tasks/edit_grub_file.yml
+
+# Add concourse to PATH
+    - name: Add concourse_path.sh to /etc/profile.d
+      include_tasks: ./tasks/concourse_add_path.yml
+
+# Install yum-utils
+    - name: Install yum-utils
+      include_tasks: ./tasks/yum-utils.yml
+
+# Install git
+    - name: Install git
+      include_tasks: ./tasks/git.yml
+
+# Install epel-release
+    - name: Get epel-release
+      include_tasks: ./tasks/epel_release.yml
+
+# Install elrepo-release and upgrade kernel
+    - name: Get elrepo-release
+      include_tasks: ./tasks/elrepo_release.yml
+
+# Install nginx from repo
+    - name: Install nginx
+      include_tasks: ./tasks/nginx.yml
+
+# Install certbot
+    - name: Install certbot
+      include_tasks: ./tasks/certbot.yml
+
+# Copy nginx configuration files
+    - name: Copy nginx conf files 
+      include_tasks: ./tasks/nginx_conf.yml
+
+# Install python packages
+    - name: Install python packages
+      include_tasks: ./tasks/python_pks.yml
+
+# Install postgreSQL
+    - name: Install psql
+      include_tasks: ./tasks/psql.yml
+
+# Install concourse binaries
+    - name: Install concourse
+      include_tasks: ./tasks/concourse_web_bin.yml
+
+# Make concourse directories
+    - name: Make concourse directories
+      include_tasks: ./tasks/concourse_dir.yml
+
+# Generate concourse web keys
+    - name: ssh-keygen
+      include_tasks: ./tasks/concourse_web_keygen.yml
+
+# Copy concourse web scripts
+    - name: Copy scripts
+      include_tasks: ./tasks/concourse_web_scripts.yml
+
+# Enable concourse-web
+    - name: Enable concourse-web
+      include_tasks: ./tasks/concourse_web_systemd.yml
+
+# Update packages 
+    - name: Update all packages
+      yum: name=* state=latest
+
+# Reboot server
+    - name: Reboot server
+      include_tasks: ./tasks/reboot.yml
+
+
+##### concourse_worker ######
+
+- hosts: concourse_worker
+  remote_user: ec2-user
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+
+  tasks:
+# Configure concourse_worker
+    - name: Configure concourse_worker_node
+      include_tasks: worker.yml
+

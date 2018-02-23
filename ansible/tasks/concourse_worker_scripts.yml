@@ -1,0 +1,12 @@
+---
+
+# Tasks file for copying scripts to concourse_worker
+
+# Copy concourse-worker script
+    - name: Copy start_worker script
+      copy:
+        src: ./scripts/concourse/concourse_start_peer_worker.sh
+        dest: /usr/local/bin/concourse-worker
+        owner: ec2-user
+        mode: 0755
+

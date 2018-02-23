@@ -1,0 +1,35 @@
+---
+
+# Tasks file for generating concourse keys for web server
+
+# Generate keys
+  - name: Copy keys script
+    copy:
+      src: ./scripts/concourse/concourse_web_keygen.sh
+      dest: /tmp
+      owner: ec2-user
+      mode: 0755
+  - name: Run keysgen script
+    command: sh concourse_web_keygen.sh
+    args:
+      chdir: /tmp
+
+# Change owner of keys
+  - name: chown ec2-user session_signing_key
+    file:
+      path: /var/lib/concourse/keys/web/session_signing_key
+      state: touch
+      owner: ec2-user
+      mode: 0644
+  - name: chown ec2-user session_signing_key
+    file:
+      path: /var/lib/concourse/keys/web/tsa_host_key
+      state: touch
+      owner: ec2-user
+      mode: 0644
+
+# Copy tsa_host_key    
+  - name: Copy tsa_host_key.pub from concourse web
+    synchronize:  src=/var/lib/concourse/keys/web/tsa_host_key.pub dest=/tmp/tsa_host_key.pub mode=pull
+
+

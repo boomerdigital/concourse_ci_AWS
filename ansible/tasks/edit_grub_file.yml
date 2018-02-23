@@ -1,0 +1,43 @@
+---
+
+# Tasks file for edit of grub file
+
+# Edit grub default file
+  - name: Edit grub default file
+    lineinfile:
+      path: /etc/default/grub
+      regexp: '^GRUB_TIMEOUT='
+      line: 'GRUB_TIMEOUT=5'
+      owner: root
+      group: root
+      mode: 0644
+
+# Edit grub default file
+  - name: Edit grub default file
+    lineinfile:
+      path: /etc/default/grub
+      regexp: '^GRUB_DEFAULT='
+      line: 'GRUB_DEFAULT=O'
+      owner: root
+      group: root
+      mode: 0644
+
+# Edit grub default file
+  - name: Edit grub default file
+    lineinfile:
+      path: /etc/default/grub
+      regexp: '^GRUB_DISTRIBUTOR='
+      state: absent
+      owner: root
+      group: root
+      mode: 0644
+
+# Edit grub default file
+  - name: Edit grub default file
+    lineinfile:
+      path: /etc/default/grub
+      regexp: '^GRUB_CMDLINE_LINUX='
+      line: 'GRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 crashkernel=auto rhgb quiet"'
+      owner: root
+      group: root
+      mode: 0644
